@@ -1,7 +1,7 @@
 ;;; init-monitor.el --- Custom CPU/Memory monitor -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;; Reads /proc/loadavg and /proc/meminfo to display CPU and memory usage
-;; in the mode-line. No external packages required.
+;; in the mode-line, No external packages required.
 
 ;;; Code:
 
