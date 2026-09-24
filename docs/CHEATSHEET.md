@@ -42,12 +42,10 @@ This document contains the essential keybindings for my Emacs configuration.
 | Keybinding | Action |
 | :--- | :--- |
 | `M-o` | Switch to other window |
-| `M-1` | Delete all other windows |
-| `M-2` | Split window below |
-| `M-3` | Split window right |
-| `C-x o` | Switch to other window (default) |
-| `C-x 0` | Close current window |
-| `C-x 1` | Close all other windows |
+| `C-x 0` | Delete all other windows |
+| `C-x 2` | Split window below |
+| `C-x 3` | Split window right |
+| `C-x 1` | Close current window |
 
 ## Navigation
 
