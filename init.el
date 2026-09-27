@@ -4,8 +4,21 @@
 
 ;;; Code:
 
-;; 1. Set up the load path for our custom modules
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+;; 1. Set up the load path for our custom modules.  Use the location of this
+;; file when available so startup also works with a custom `-q`/`-l` path or a
+;; symlinked Emacs home.
+(defconst my/config-directory
+  (file-name-directory
+   (expand-file-name (or load-file-name user-init-file
+                           (expand-file-name "init.el" user-emacs-directory))))
+  "Directory containing this Emacs configuration.")
+(defconst my/config-lisp-directory
+  (expand-file-name "lisp" my/config-directory)
+  "Directory containing this configuration's custom modules.")
+(unless (file-directory-p my/config-lisp-directory)
+  (error "Emacs config module directory does not exist: %s"
+         my/config-lisp-directory))
+(add-to-list 'load-path my/config-lisp-directory)
 
 ;; 2. Basic UI/UX Settings (These are safe and don't require packages)
 (setq inhibit-startup-screen t) ; No splash screen
