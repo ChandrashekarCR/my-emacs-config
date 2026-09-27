@@ -22,6 +22,8 @@
 (setq create-lockfiles nil)          ; No lock files
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ; Clean whitespace
 (setq use-short-answers t)           ; y/n instead of yes/no
+(setq-default indent-tabs-mode nil)
+(setq tab-width 4)
 
 ;; 3. Load our custom modules
 (require 'init-packages) ; Handles package installation
@@ -37,6 +39,23 @@
 (global-set-key (kbd "C-c 2") 'split-window-below)   ; was M-2
 (global-set-key (kbd "C-c 3") 'split-window-right)   ; was M-3
 (global-set-key (kbd "C-c 0") 'delete-window)        ; close current window
+(winner-mode 1)
+(windmove-default-keybindings 'meta)
+
+;; Keyboard-first workspace tabs.
+(tab-bar-mode 1)
+(setq tab-bar-show 1
+      tab-bar-close-button-show nil
+      tab-bar-new-tab-choice "*scratch*"
+      tab-bar-tab-hints t)
+(global-set-key (kbd "C-c t n") #'tab-bar-new-tab)
+(global-set-key (kbd "C-c t c") #'tab-bar-close-tab)
+(global-set-key (kbd "C-c t l") #'tab-bar-switch-to-next-tab)
+(global-set-key (kbd "C-c t h") #'tab-bar-switch-to-prev-tab)
+(global-set-key (kbd "C-c t r") #'tab-bar-rename-tab)
+(global-set-key (kbd "C-c t 1") (lambda () (interactive) (tab-bar-select-tab 1)))
+(global-set-key (kbd "C-c t 2") (lambda () (interactive) (tab-bar-select-tab 2)))
+(global-set-key (kbd "C-c t 3") (lambda () (interactive) (tab-bar-select-tab 3)))
 (with-eval-after-load 'term
   (define-key term-raw-map (kbd "M-o") 'other-window)) ; Swtich to other window
 

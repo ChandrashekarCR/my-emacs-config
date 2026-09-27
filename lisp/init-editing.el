@@ -5,9 +5,17 @@
 ;;; Code:
 
 ;; Enable global company-mode for auto-completion.
-(global-company-mode 1)
 (setq company-idle-delay 0.2
-      company-minimum-prefix-length 1)
+      company-minimum-prefix-length 1
+      company-selection-wrap-around t
+      company-tooltip-align-annotations t
+      company-require-match nil)
+(global-company-mode 1)
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "TAB") #'company-complete-selection)
+  (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
 
 ;; Enable global flycheck for syntax checking.
 (global-flycheck-mode 1)
