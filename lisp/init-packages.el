@@ -19,14 +19,19 @@
 ;; ============================================================================
 (setq package-check-signature nil)
 
-;; Refresh package contents (only if needed).
-(unless package-archive-contents
+;; Refresh package contents only when explicitly requested. A transient archive
+;; or mirror failure should not make an otherwise usable editor unstartable.
+(defvar my/package-refresh-on-startup nil)
+(when (and my/package-refresh-on-startup
+           (not package-archive-contents))
   (package-refresh-contents))
 
-;; Install 'gnu-elpa-keyring-update' first. This package imports the new GPG
-;; keys so future signature checks will work.
+;; Install 'gnu-elpa-keyring-update' first when it is available locally. Package
+;; installation is intentionally best-effort during startup.
 (unless (package-installed-p 'gnu-elpa-keyring-update)
-  (package-install 'gnu-elpa-keyring-update))
+  (condition-case err
+      (package-install 'gnu-elpa-keyring-update)
+    (error (message "Skipping keyring update: %s" (error-message-string err)))))
 
 ;; Now, define the list of packages we want.
 (defvar my-packages
@@ -40,20 +45,21 @@
     flycheck
     diredfl
     doom-modeline
-    ;; Rust
-    rustic
-    lsp-mode
-    lsp-ui
     yasnippet))
 
-;; Install any packages that aren't already installed.
+;; Install any packages that aren't already installed, without making startup
+;; depend on a live package archive.
 (dolist (pkg my-packages)
   (unless (package-installed-p pkg)
-    (package-install pkg)))
+    (condition-case err
+        (package-install pkg)
+      (error (message "Skipping package %s: %s" pkg (error-message-string err))))))
 
 ;; Load use-package (it's not built-in for Emacs 27).
 (unless (package-installed-p 'use-package)
-  (package-install 'use-package))
+  (condition-case err
+      (package-install 'use-package)
+    (error (message "Skipping use-package installation: %s" (error-message-string err)))))
 (require 'use-package)
 
 ;; Re-enable signature checking for future sessions.

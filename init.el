@@ -45,6 +45,7 @@
 (require 'init-monitor)  ; System monitor
 (require 'init-ui)       ; Theme + mode-line (user monitor functions)
 (require 'init-languages) ; Language
+(require 'init-productivity) ; Org, sessions, and workspace workflow
 
 ;; 4. Essential global keybindings
 ;; Window management (tmux-like)

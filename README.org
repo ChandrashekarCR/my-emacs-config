@@ -1,0 +1,117 @@
+#+title: Emacs Workflow
+#+author: Local configuration guide
+
+* Start here
+
+This configuration is a keyboard-first Emacs setup for programming, notes, and
+small personal workflows. Emacs has three useful ideas to keep separate:
+
+- A *buffer* is open text, usually a file.
+- A *window* is a pane displaying a buffer.
+- A *tab* is a named workspace containing its own window layout.
+
+The tab-bar plus desktop persistence gives a lightweight tmux-like workflow:
+tabs are workspaces, windows are panes, and desktop mode restores buffers after
+restarting Emacs.
+
+* Everyday shortcuts
+
+** Files, buffers, and search
+
+| Key | Action |
+|-----+--------|
+| =C-x C-f= | Find a file |
+| =C-x b= | Switch buffer |
+| =C-x k= | Kill buffer |
+| =C-s= | Search in the current buffer |
+| =C-c s= | Search with ripgrep |
+| =C-c p f= | Find a file in the current project |
+| =C-c g= | Open Magit status |
+
+** Windows and movement
+
+| Key | Action |
+|-----+--------|
+| =C-c 1= | Keep only the current window |
+| =C-c 2= | Split below |
+| =C-c 3= | Split right |
+| =C-c 0= | Delete the current window |
+| =M-arrow= | Move to the window in that direction |
+| =C-c <left>= | Undo a window layout change |
+| =C-c <right>= | Redo a window layout change |
+
+Use =C-f=, =C-b=, =C-n=, and =C-p= for character and line movement. Use
+=M-f= and =M-b= to move by words, =C-a= and =C-e= for line boundaries, and
+=M-<= / =M->= for the beginning and end of a buffer. In a programming buffer,
+=M-;= adds a comment and =C-x C-= shows the current line and column.
+
+** Tabs / tmux-like sessions
+
+| Key | Action |
+|-----+--------|
+| =C-c w n= | New tab |
+| =C-c w k= | Close tab |
+| =C-c w r= | Rename tab |
+| =C-c w h= / =C-c w l= | Previous / next tab |
+| =C-c w 1=, =C-c w 2=, =C-c w 3= | Jump to tab |
+
+Desktop persistence is enabled automatically. Emacs saves the open buffers and
+window arrangement in =~/.emacs.d/.emacs.desktop= and restores them next time.
+
+** Copy, paste, and editing
+
+| Key | Action |
+|-----+--------|
+| =C-w= | Cut the active region |
+| =M-w= | Copy the active region |
+| =C-y= | Paste the last kill |
+| =M-y= | Cycle older copied text after pasting |
+| =C-/= | Undo |
+| =C-x h= | Select the whole buffer |
+| =C-g= | Cancel the current command |
+
+Hold =C-space=, move the cursor, then use =M-w= or =C-w=. This is Emacs'
+selection model: the mark starts a region and point is the cursor.
+
+* Org mode
+
+Org mode is a plain-text format and editor for outlines. A heading starts with
+asterisks, tasks use TODO keywords, and links, tables, timestamps, code blocks,
+agenda views, and exports are all kept in text files. It is useful because your
+notes remain searchable, versionable with Git, and programmable instead of
+being trapped in a proprietary database.
+
+The configuration stores Org files under =~/.emacs.d/org/=.
+
+| Key | Action |
+|-----+--------|
+| =C-c o c= | Capture an inbox task, note, or journal entry |
+| =C-c o a= | Open the agenda |
+| =C-c o t= | Cycle a TODO item |
+| =C-c o f= | Follow an Org link |
+| =C-c l= | Store a link from the current buffer |
+| =C-c c= | Capture using the built-in Org command |
+| =C-c a= | Open the built-in agenda command |
+
+In an Org buffer, =TAB= folds or unfolds a heading, =S-TAB= cycles the whole
+outline, =M-RET= adds a sibling heading, and =C-c C-t= cycles TODO state.
+Use =C-c C-c= to update a checkbox, property, or source block.
+
+Capture templates are selected after =C-c o c=:
+
+| Key | Destination |
+|-----+-------------|
+| =i= | TODO item in =inbox.org= |
+| =n= | Note under the Notes heading |
+| =j= | Today's journal entry |
+
+* Programming setup
+
+Projectile finds project roots, Counsel/Ivy provides searchable commands and
+buffers, Company provides completion, Flycheck reports external diagnostics,
+and Magit handles Git. Rust LSP support is optional: install =rustic=,
+=lsp-mode=, and =lsp-ui= from =M-x package-list-packages= when the package
+archive is healthy, then restart Emacs.
+
+For a project, open its directory with =C-x C-f=, use =C-c p f= to jump among
+files, =C-c s= for project search, and =C-c g= to review Git changes.
