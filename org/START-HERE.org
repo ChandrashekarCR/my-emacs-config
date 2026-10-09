@@ -1,0 +1,27 @@
+#+title: Org Mode Starter
+
+* What is this?
+
+Org mode is plain text with structure. Use it for tasks, notes, links, meeting
+records, journals, checklists, tables, and eventually code blocks or exports.
+
+* Try this now
+
+1. Press =C-c o c=, then =i=, and capture a task.
+2. Press =C-c o a= to see it in the agenda.
+3. Press =t= on the task to change its state.
+4. Press =C-c o c=, then =n=, to capture a note.
+5. Press =C-c o c=, then =j=, to capture today's journal entry.
+
+* The task loop
+
+** TODO Capture the next thing I need to do
+** NEXT Choose one small physical action
+** WAITING Record what is blocking me
+** DONE Mark finished work
+
+* Keep it simple
+
+Use =inbox.org= for tasks, =notes.org= for reusable knowledge, and
+=journal/journal.org= for dated reflections. Review with =C-c o a= and do not
+add more extensions until this small loop is comfortable.

@@ -83,6 +83,11 @@ being trapped in a proprietary database.
 
 The configuration stores Org files under =~/.emacs.d/org/=.
 
+Think of Org as a folder of editable text files with useful structure. You do
+not need to learn a new database or remember a large command language. Start
+with three actions: capture something, review it in the agenda, and mark it
+done.
+
 | Key | Action |
 |-----+--------|
 | =C-c o c= | Capture an inbox task, note, or journal entry |
@@ -104,6 +109,46 @@ Capture templates are selected after =C-c o c=:
 | =i= | TODO item in =inbox.org= |
 | =n= | Note under the Notes heading |
 | =j= | Today's journal entry |
+
+** Your first five minutes
+
+1. Press =C-c o c=, then =i=. Type =Learn Org mode= and press =C-c C-c=.
+	This saves a TODO task in =org/inbox.org=.
+2. Press =C-c o a=. The agenda shows the task. Move to it and press =t= to
+	cycle between =TODO=, =NEXT=, =WAITING=, and =DONE=.
+3. Press =C-c o c=, then =n=. Type a short explanation under the Notes
+	heading and press =C-c C-c=. This is a durable note, not a task.
+4. Press =C-c o c=, then =j=. Write what you worked on today and press
+	=C-c C-c=. This is your journal entry for the current date.
+5. Open any of those files with =C-x C-f=. Use =TAB= on a heading to fold its
+	children, and =M-RET= to create another heading beside it.
+
+Use the task states for action:
+
+- =TODO=: captured, but not started.
+- =NEXT=: the next concrete action you intend to do.
+- =WAITING=: blocked by a person, decision, or outside event.
+- =DONE=: finished. Emacs records the completion time automatically.
+
+Use notes for knowledge, journal entries for a dated record, and the inbox for
+anything you do not yet know how to classify. The agenda is the review screen
+that brings tasks from the inbox and journal together.
+
+** A small example
+
+#+begin_src org
+* TODO Read the Org guide
+  Captured while learning Emacs.
+** NEXT Try one capture
+	This is the next physical action.
+** WAITING Ask a question
+	Waiting for an answer from someone else.
+#+end_src
+
+Org files are ordinary text, so Git can version them and ripgrep can search
+them. Links are written as =[[https://example.com][Example]]=, and a checkbox is
+=- [ ] unfinished= or =- [X] complete=. The powerful parts can wait until the
+basic capture and agenda loop feels natural.
 
 * Programming setup
 
