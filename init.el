@@ -44,6 +44,7 @@
 (require 'init-navigation) ; Dired, Projectile, etc.
 (require 'init-monitor)  ; System monitor
 (require 'init-ui)       ; Theme + mode-line (user monitor functions)
+(require 'init-languages) ; Language
 
 ;; 4. Essential global keybindings
 ;; Window management (tmux-like)
@@ -61,16 +62,26 @@
       tab-bar-close-button-show nil
       tab-bar-new-tab-choice "*scratch*"
       tab-bar-tab-hints t)
+;; Create a new tab
 (global-set-key (kbd "C-c t n") #'tab-bar-new-tab)
+;; Close currrent tab
 (global-set-key (kbd "C-c t c") #'tab-bar-close-tab)
+;; Switch to next tab/previous tab
 (global-set-key (kbd "C-c t l") #'tab-bar-switch-to-next-tab)
 (global-set-key (kbd "C-c t h") #'tab-bar-switch-to-prev-tab)
+;; Rename the current tab
 (global-set-key (kbd "C-c t r") #'tab-bar-rename-tab)
 (global-set-key (kbd "C-c t 1") (lambda () (interactive) (tab-bar-select-tab 1)))
 (global-set-key (kbd "C-c t 2") (lambda () (interactive) (tab-bar-select-tab 2)))
 (global-set-key (kbd "C-c t 3") (lambda () (interactive) (tab-bar-select-tab 3)))
 (with-eval-after-load 'term
   (define-key term-raw-map (kbd "M-o") 'other-window)) ; Swtich to other window
+
+;; --- Winner Mode (Window Layout Undo/Redo) ---
+;; Undo the last window layout change
+(global-set-key (kbd "C-c <left>") #'winner-undo)
+;; Redo the last window layout change
+(global-set-key (kbd "C-c <right>") #'winner-redo)
 
 ;; Org-mode global keys
 (global-set-key (kbd "C-c l") #'org-store-link)

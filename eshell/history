@@ -1,0 +1,38 @@
+ls
+cd homelab-bio-devops/scripts/samba/
+ls
+./setup_samba.sh 
+sudo ./setup_samba.sh 
+sudo smbpasswd -a chandru
+ls
+cd homelab-bio-devops/
+ls
+cd scripts/
+sudo smbpasswd -a chandru
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+cd ..
+cd media/myfiles/chandru/
+ls
+cd ..
+ls -ld /media/myfiles /media/myfiles/chandru
+sudo chmod 2770 /media/myfiles/chandru
+ls -ld /media/myfiles /media/myfiles/chandru
+sudo find /media/myfiles/chandru -type d -exec chmod 2770 {} +
+sudo find /media/myfiles/chandru -type f -exec chmod 0660 {} +
+cd chandru/
+ls
+cd ~/homelab-bio-devops/scripts/samba/
+clear 
+clear
+./setup_samba.sh 
+sudo ./setup_samba.sh 
+getent passwd chandru
+sudo su -s /bin/bash chandru -c "ls -la /media/myfiles/chandru"
+ls -ld /media /media/myfiles /media/myfiles/chandru
+ls -ld /media /media/myfiles /media/myfiles/chandru
+ls -la /media/myfiles/chandru

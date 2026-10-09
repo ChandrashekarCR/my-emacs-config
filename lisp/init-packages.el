@@ -39,7 +39,12 @@
     company
     flycheck
     diredfl
-    doom-modeline))
+    doom-modeline
+    ;; Rust
+    rustic
+    lsp-mode
+    lsp-ui
+    yasnippet))
 
 ;; Install any packages that aren't already installed.
 (dolist (pkg my-packages)
