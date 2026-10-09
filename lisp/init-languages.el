@@ -4,6 +4,45 @@
 
 ;;; Code:
 
+;; Emacs 31 includes native tree-sitter Rust mode. Basic editing should work
+;; without any package downloads; eglot adds semantic completion and diagnostics
+;; from the rust-analyzer executable already installed on this machine.
+(defconst my/rust-analyzer
+  (or (executable-find "rust-analyzer")
+      (let ((candidate (expand-file-name "~/.cargo/bin/rust-analyzer")))
+        (when (file-executable-p candidate) candidate)))
+  "Absolute path to the Rust language server, when installed.")
+
+(when my/rust-analyzer
+  (let ((rust-bin (file-name-directory my/rust-analyzer)))
+    (add-to-list 'exec-path rust-bin)
+    (setenv "PATH" (concat rust-bin path-separator (getenv "PATH")))))
+
+(when (and (fboundp 'rust-ts-mode)
+           (fboundp 'treesit-available-p)
+           (treesit-available-p))
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
+  (when my/rust-analyzer
+    (require 'eglot)
+    (setq eglot-autoshutdown t)
+    (add-to-list 'eglot-server-programs
+                 `(rust-ts-mode . (,my/rust-analyzer))))
+  (add-hook 'rust-ts-mode-hook
+            (lambda ()
+              (when (fboundp 'company-mode)
+                (company-mode 1))
+              (when (and my/rust-analyzer
+                         (fboundp 'eglot-ensure))
+                ;; Let project.el/Projectile finish discovering the Cargo root.
+                (run-at-time 0 nil
+                             (lambda (buffer)
+                               (when (buffer-live-p buffer)
+                                 (with-current-buffer buffer
+                                   (eglot-ensure))))
+                             (current-buffer)))
+              (when (fboundp 'eglot)
+                (local-set-key (kbd "C-c C-l") #'eglot)))))
+
 ;; ─────────────────────────────────────────────────────────────────────────────
 ;; Rust
 ;; ─────────────────────────────────────────────────────────────────────────────

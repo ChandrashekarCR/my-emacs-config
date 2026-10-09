@@ -5,3 +5,5 @@ elpa
 eln-cache
 auto-save-list
 recentf.eld
+/lisp/.emacs.desktop
+/tree-sitter

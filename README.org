@@ -153,10 +153,24 @@ basic capture and agenda loop feels natural.
 * Programming setup
 
 Projectile finds project roots, Counsel/Ivy provides searchable commands and
-buffers, Company provides completion, Flycheck reports external diagnostics,
-and Magit handles Git. Rust LSP support is optional: install =rustic=,
-=lsp-mode=, and =lsp-ui= from =M-x package-list-packages= when the package
-archive is healthy, then restart Emacs.
+buffers, Company provides completion, and Magit handles Git. Rust uses Emacs
+31's built-in tree-sitter mode for highlighting and built-in Eglot with the
+installed =rust-analyzer= for semantic completion and diagnostics. Open a Rust
+file inside a Cargo project and wait briefly for the server to start. If a
+non-standard project does not start it automatically, use =C-c C-l= in the
+Rust buffer to start Eglot manually.
 
 For a project, open its directory with =C-x C-f=, use =C-c p f= to jump among
 files, =C-c s= for project search, and =C-c g= to review Git changes.
+
+** Rust completion troubleshooting
+
+After changing this configuration, restart Emacs so an old Eglot session does
+not keep the previous command name. In a Rust buffer inside a Cargo project,
+wait a moment after opening the file, type =prin=, and wait for the Company
+popup. =M-TAB= or =C-M-i= requests completion immediately. Eglot should show
+the connected server in the mode line and Rust diagnostics as underlined text.
+
+If completion does not appear, run =M-x eglot-shutdown=, then =M-x eglot=
+once. The local fallback is =C-c C-l=. Check =M-x describe-variable RET
+my/rust-analyzer RET=; it should point to =~/.cargo/bin/rust-analyzer=.
